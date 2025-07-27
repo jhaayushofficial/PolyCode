@@ -13,7 +13,7 @@ const generateFile = (language, code) => {
   const fileName = `${jobId}.${language}`;
   const filePath = path.join(dirCodes, fileName);
   fs.writeFileSync(filePath, code);
-  console.log(jobId);
+  // console.log(jobId);
   return filePath;
 };
 

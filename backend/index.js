@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const { generateFile } = require("./generateFile");
 const executeCpp = require("./executeCpp");
+const { generateInputFile } = require("./generateInputFile");
 
 app.use(cors());
 
@@ -17,20 +18,40 @@ app.post("/run", async (req, res) => {
   // const code = req.body.code;
   // const language = req.body.language;
 
-  const { language = "cpp", code } = req.body;
+  const { language = "cpp", code, input } = req.body;
+
+  console.log("Received request:", {
+    language,
+    code: code ? code.substring(0, 100) + "..." : "undefined",
+    input,
+  });
 
   if (code == undefined) {
     return res.status(400).json({ success: false, error: "Empty code body" });
   }
 
   try {
+    console.log("Generating file...");
     const filePath = generateFile(language, code);
-    console.log("filePath", filePath);
-    const output = await executeCpp(filePath);
-    res.json({ filePath, output });
+    console.log("File generated at:", filePath);
+
+    console.log("Generating input file...");
+    const inputFilePath = generateInputFile(input);
+    console.log("Input file generated at:", inputFilePath);
+
+    console.log("Executing C++ code...");
+    const output = await executeCpp(filePath, inputFilePath);
+    console.log("Execution completed, output:", output);
+
+    res.json({ success: true, filePath, inputFilePath, output });
   } catch (error) {
-    console.log("error", error);
-    res.status(500).json({ success: false, error: error.message });
+    console.error("Error details:", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        error: error.message || "Unknown error occurred",
+      });
   }
 });
 
