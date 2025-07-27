@@ -1,0 +1,19 @@
+*:focus {
+  outline: none;
+}
+
+body {
+  background-image: url("https://images.pexels.com/photos/1831234/pexels-photo-1831234.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Remove background from operators and make them blend with normal text */
+.token.operator,
+.token.punctuation {
+  background: none !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
