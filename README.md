@@ -1,7 +1,3 @@
-# Create new README for PolyCode
-
-@"
-
 # PolyCode - Multi-Language Online Code Compiler
 
 A modern, full-stack web application that provides an interactive online code compiler supporting multiple programming languages. Built with React, Node.js, and MongoDB, it offers a seamless coding experience with real-time compilation and execution.
